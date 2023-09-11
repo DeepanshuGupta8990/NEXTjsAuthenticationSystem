@@ -7,7 +7,10 @@ import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation"; 
-export default function Profile() {
+
+
+
+export default  function Profile() {
   const router = useRouter();
   const [data,setData] = useState('nothing');
   const [isLoading,setIsLoading] = useState(false);
@@ -41,7 +44,8 @@ export default function Profile() {
     console.log(res.data);
     setData(res.data.data._id);
   }
-  
+
+
   return (
     <Cotainer>
     <div style={{display:'block'}}><p>  Profile owner</p></div>
@@ -52,15 +56,18 @@ export default function Profile() {
               width={30}
               height={30}
               alt="Picture of the author"
-            />) : (<button className="singupBtn" onClick={logout} >Logout</button>) 
+            />) : (
+            <button className="singupBtn" onClick={logout} >Logout</button>
+            ) 
       }
+
     </Cotainer>
   )
 }
 
 const Cotainer = styled.main`
     width: 100vw;
-    height: 100vh;
+    height: 95vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
