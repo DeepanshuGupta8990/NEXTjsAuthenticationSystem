@@ -1,16 +1,19 @@
 'use client'
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { useRouter } from "next/navigation"; 
-import axios from "axios";
 import { styled } from "styled-components"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from 'next/image'
-import spinner from '@/images/spinner.gif'
-
+import spinner from '@/images/spinner.gif';
+import { useSearchParams } from 'next/navigation'
+import axios from "axios";
 export default function LoginPage() {
     const router = useRouter();
+    const searchParams = useSearchParams()
+    const logout = searchParams.get('logout')
+    const logoutSuccessMez = useRef(true);
     const [isLoading,setIsLoading] = useState(false);
     const [buttonDisabled,setButtonDisabled] = useState(true);
     const [user,setUser] = useState({
@@ -22,7 +25,7 @@ export default function LoginPage() {
         autoClose: "8000",
         pauseOnHover: true,
         draggable: true,
-        theme: "light",
+        theme: "dark",
       };
       const onLogin = async()=>{
          try{
@@ -30,10 +33,10 @@ export default function LoginPage() {
             const response = await axios.post("/api/users/login",user);
             console.log(response)
             if(response.data.success){
-            toast.success("Login Succesfully",toastOptions);
+            // toast.success("Login Succesfully",toastOptions);
             setTimeout(()=>{
-                router.push(`/profile/${response.data.userProfile.username}`)
-            })
+                router.push(`/profile/${response.data.userProfile.username}?login=success`)
+            },100)
             }else{
                 toast.error(response.data.err,toastOptions)
             }
@@ -53,6 +56,16 @@ export default function LoginPage() {
             setButtonDisabled(true);
           }
       },[user])
+        
+  useEffect(()=>{
+    if(logout==='success' && logoutSuccessMez.current){
+      console.log('logout = ',logout)
+      toast.success("Logout succesfully",toastOptions)
+      logoutSuccessMez.current = false
+     }
+  },[])
+
+
       
   return (
     <>
@@ -89,7 +102,7 @@ export default function LoginPage() {
 
 const Conatiner = styled.main`
     width: 100vw;
-    height: 100vh;
+    height: 95vh;
     padding: 24;
     display: flex;
     align-items: center;

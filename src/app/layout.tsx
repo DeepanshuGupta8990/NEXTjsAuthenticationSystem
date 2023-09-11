@@ -1,7 +1,10 @@
+'use client'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import StyledComponentsRegistry from './lib/registry'
+import { AnimatePresence } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,14 +14,25 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({
+
   children,
 }: {
   children: React.ReactNode
 }) {
+  const pathName = usePathname();
   return (
     <html lang="en">
       <body className={inter.className}>
-      <StyledComponentsRegistry>{children}</StyledComponentsRegistry>        
+      <StyledComponentsRegistry>
+        <>
+      {
+        pathName!=='/profile'? 
+        <h1 style={{width:"100vw",textAlign:"center",fontSize:24}}>Nextjs</h1>
+        :""
+      }
+        {children}
+        </>
+        </StyledComponentsRegistry>        
       </body>
     </html>
   )

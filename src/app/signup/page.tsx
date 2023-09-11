@@ -92,7 +92,7 @@ export default function SignupPage() {
 const Conatiner = styled.main`
     
     width: 100vw;
-    height: 100vh;
+    height: 95vh;
     padding: 24;
     display: flex;
     align-items: center;
