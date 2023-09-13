@@ -10,6 +10,7 @@ export const sendEmail = async({email,emailType,userId}:any)=>{
          await User.findByIdAndUpdate(userId,
             {verifyTokem:hashedToken,
                verifyTokenExpiry:Date.now() + 3600000})
+               console.log('currentTime', Date.now())
       }else if(emailType === 'RESET'){
          await User.findByIdAndUpdate(userId,
             {forgotPassswordToken:hashedToken,
@@ -25,16 +26,28 @@ export const sendEmail = async({email,emailType,userId}:any)=>{
          }
        });
 
-       const mailOptions = {
-         from : "deepanshuguptaa617@gmail.com",
-         to:email,
-         subject: emailType==='VERIFY'?"Verify your email":"Reset your password",
-         html: `<p>Click <a href="http://localhost:3000/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
-         or copy and paste the link below in your browser. <br> http://localhost:3000/verifyemail?token=${hashedToken}
-         </p>`
-       }
+       let mailOptions
+      if(emailType === 'VERIFY'){
+          mailOptions = {
+            from : "deepanshuguptaa617@gmail.com",
+            to:email,
+            subject: emailType==='VERIFY'?"Verify your email":"Reset your password",
+            html: `<p>Click <a href="http://localhost:3000/verifyemail?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
+            or copy and paste the link below in your browser. <br> http://localhost:3000/verifyemail?token=${hashedToken}
+            </p>`
+          }
+      }else if(emailType === 'RESET'){
+         mailOptions = {
+            from : "deepanshuguptaa617@gmail.com",
+            to:email,
+            subject: emailType==='VERIFY'?"Verify your email":"Reset your password",
+            html: `<p>Click <a href="http://localhost:3000/forgetpassword?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}
+            or copy and paste the link below in your browser. <br> http://localhost:3000/forgetpassword?token=${hashedToken}
+            </p>`
+          }
+      }
 
-       const mailResponse = await transport.sendMail(mailOptions);
+       const mailResponse = await transport.sendMail(mailOptions!);
        return mailResponse;
    }catch(err:any){
       throw new Error(err.message); 
