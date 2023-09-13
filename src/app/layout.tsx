@@ -22,6 +22,9 @@ export default function RootLayout({
   const pathName = usePathname();
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="/style.css" />
+      </head>
       <body className={inter.className}>
       <StyledComponentsRegistry>
         <>

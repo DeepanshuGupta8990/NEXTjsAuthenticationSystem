@@ -88,11 +88,11 @@ export default function LoginPage() {
                 width={30}
                 height={30}
                 alt="Picture of the author"
-              />) : (<button id="singupBtn" onClick={onLogin} >{buttonDisabled ? "No Login" : "Login"}</button>) 
+              />) : (<button className="singupBtn" onClick={onLogin} >{buttonDisabled ? "No Login" : "Login"}</button>) 
             }
         <Link href='/signup'>Go to Signup</Link>
      </div>
-
+     <button className="forget" onClick={()=>{router.push("/checkEmail")}} >Forget Password</button>
     </div>
     </Conatiner>
     <ToastContainer />
@@ -172,7 +172,7 @@ const Conatiner = styled.main`
      div{
         display: flex;
         flex-direction: row;
-        #singupBtn{
+        .singupBtn{
             background-color: #a9c0c5;
             width: 6rem;
             height: 2rem;
@@ -194,4 +194,23 @@ const Conatiner = styled.main`
         }
      }
     }
+    .forget{
+            background-color: #a9c0c5;
+            width: 13rem;
+            height: 2rem;
+            border-radius: 0.2rem;
+            transition: 0.3s ease;
+            &:hover{
+                background-color: #6ecfd6;
+            }
+            &:active{
+                transform: scale(0.95);
+            }
+        }
 `
+
+export function generateMetadata(){
+    return {
+      title:"Login page"
+    }
+  }
