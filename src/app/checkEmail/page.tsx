@@ -141,8 +141,8 @@ const Conatiner = styled.main`
     }
 `
 
-export function generateMetadata(){
-    return {
-      title:"Login page"
-    }
-  }
+// export function generateMetadata(){
+//     return {
+//       title:"Login page"
+//     }
+//   }
