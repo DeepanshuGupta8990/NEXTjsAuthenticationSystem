@@ -10,7 +10,7 @@ export async function connect(){
     //   })
     // }
     try{
-        mongoose.connect('mongodb+srv://deepanshugupta899:No7o2nkR5Zn9GxFt@cluster0.41bitzk.mongodb.net/nextjs')
+        mongoose.connect(process.env.MONGO_URL!)
         .then(()=>{
           console.log("Db connected");
         }).catch((err)=>{
